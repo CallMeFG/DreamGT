@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{-- 1. LOGIKA PHP: Mencari Item agar tidak error 'Undefined variable $item' --}}
     @php
         $selectedItem = null;
         $initialType = 'pc';
@@ -18,9 +19,7 @@
         <div class="w-full max-w-3xl bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
 
             <div class="bg-ewc-black p-8 text-white flex justify-between items-center relative overflow-hidden">
-                <div
-                    class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
-                </div>
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
                 <div class="relative z-10">
                     <h2 class="text-2xl font-black uppercase tracking-tighter">Booking & Payment</h2>
                     <p class="text-xs text-gray-400 mt-1 font-mono">STEP 1 OF 1</p>
@@ -45,50 +44,49 @@
                     </div>
                 @endif
 
-                <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8"
-                    id="bookingForm">
+                <form action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8" id="bookingForm">
                     @csrf
 
                     <div class="space-y-6">
-                        <h3 class="text-sm font-black text-ewc-black uppercase border-b border-gray-100 pb-2">1. Session
-                            Details</h3>
+                        <h3 class="text-sm font-black text-ewc-black uppercase border-b border-gray-100 pb-2">1. Session Details</h3>
 
                         <div class="flex border-b border-gray-200 mb-4">
                             <label class="flex-1 cursor-pointer">
-                                <input type="radio" name="booking_type_selector" value="pc" class="peer sr-only" {{ $initialType == 'pc' ? 'checked' : '' }} onchange="toggleType('pc')">
-                                <div
-                                    class="text-center py-3 text-sm font-bold text-gray-400 peer-checked:text-ewc-black peer-checked:border-b-2 peer-checked:border-ewc-gold transition-all uppercase tracking-wider">
-                                    PC Workstation</div>
+                                <input type="radio" name="booking_type_selector" value="pc" class="peer sr-only" 
+                                    {{ $initialType == 'pc' ? 'checked' : '' }} onchange="toggleType('pc')">
+                                <div class="text-center py-3 text-sm font-bold text-gray-400 peer-checked:text-ewc-black peer-checked:border-b-2 peer-checked:border-ewc-gold transition-all uppercase tracking-wider">
+                                    PC Workstation
+                                </div>
                             </label>
                             <label class="flex-1 cursor-pointer">
-                                <input type="radio" name="booking_type_selector" value="arena" class="peer sr-only" {{ $initialType == 'arena' ? 'checked' : '' }} onchange="toggleType('arena')">
-                                <div
-                                    class="text-center py-3 text-sm font-bold text-gray-400 peer-checked:text-ewc-black peer-checked:border-b-2 peer-checked:border-ewc-gold transition-all uppercase tracking-wider">
-                                    VIP Arena</div>
+                                <input type="radio" name="booking_type_selector" value="arena" class="peer sr-only" 
+                                    {{ $initialType == 'arena' ? 'checked' : '' }} onchange="toggleType('arena')">
+                                <div class="text-center py-3 text-sm font-bold text-gray-400 peer-checked:text-ewc-black peer-checked:border-b-2 peer-checked:border-ewc-gold transition-all uppercase tracking-wider">
+                                    VIP Arena
+                                </div>
                             </label>
                         </div>
 
-                        <input type="hidden" name="bookable_type" id="inputType"
-                            value="{{ $initialType == 'pc' ? 'App\Models\Pc' : 'App\Models\Arena' }}">
+                        <input type="hidden" name="bookable_type" id="inputType" value="{{ $initialType == 'pc' ? 'App\Models\Pc' : 'App\Models\Arena' }}">
 
                         <div>
                             <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Select Unit</label>
-                            <select id="pcSelect" name="pc_id"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none font-bold text-gray-700"
-                                {{ $initialType == 'arena' ? 'disabled style=display:none' : '' }}
-                                onchange="calculateTotal()">
+                            
+                            <select id="pcSelect" name="pc_id" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none font-bold text-gray-700" 
+                                {{ $initialType == 'arena' ? 'disabled style=display:none' : '' }} onchange="calculateTotal()">
                                 @foreach($pcs as $pc)
-                                    <option value="{{ $pc->id }}" data-price="{{ $pc->type->price_per_hour }}" {{ (isset($selectedPcId) && $selectedPcId == $pc->id) ? 'selected' : '' }}>
-                                        {{ $pc->pc_number }} - {{ $pc->type->name }} (Rp
-                                        {{ number_format($pc->type->price_per_hour, 0, ',', '.') }}/hr)
+                                    <option value="{{ $pc->id }}" data-price="{{ $pc->type->price_per_hour }}" 
+                                        {{ (isset($selectedPcId) && $selectedPcId == $pc->id) ? 'selected' : '' }}>
+                                        {{ $pc->pc_number }} - {{ $pc->type->name }} (Rp {{ number_format($pc->type->price_per_hour, 0, ',', '.') }}/hr)
                                     </option>
                                 @endforeach
                             </select>
-                            <select id="arenaSelect" name="arena_id"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none font-bold text-gray-700"
+
+                            <select id="arenaSelect" name="arena_id" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none font-bold text-gray-700" 
                                 {{ $initialType == 'pc' ? 'disabled style=display:none' : '' }} onchange="calculateTotal()">
                                 @foreach($arenas as $arena)
-                                    <option value="{{ $arena->id }}" data-price="{{ $arena->price_per_hour }}" {{ (isset($selectedArenaId) && $selectedArenaId == $arena->id) ? 'selected' : '' }}>
+                                    <option value="{{ $arena->id }}" data-price="{{ $arena->price_per_hour }}" 
+                                        {{ (isset($selectedArenaId) && $selectedArenaId == $arena->id) ? 'selected' : '' }}>
                                         {{ $arena->name }} (Rp {{ number_format($arena->price_per_hour, 0, ',', '.') }}/hr)
                                     </option>
                                 @endforeach
@@ -98,19 +96,15 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Date</label>
-                                <input type="date" name="booking_date" min="{{ date('Y-m-d') }}" value="{{ date('Y-m-d') }}"
-                                    required
-                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none">
+                                <input type="date" name="booking_date" min="{{ date('Y-m-d') }}" value="{{ date('Y-m-d') }}" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Start Time</label>
-                                <input type="time" name="start_time" value="{{ now()->addHour()->format('H:00') }}" required
-                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none">
+                                <input type="time" name="start_time" value="{{ now()->addHour()->format('H:00') }}" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Duration</label>
-                                <select name="duration" id="durationSelect" onchange="calculateTotal()"
-                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none font-bold">
+                                <select name="duration" id="durationSelect" onchange="calculateTotal()" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:border-ewc-gold outline-none font-bold">
                                     @for($i = 1; $i <= 12; $i++)
                                         <option value="{{ $i }}">{{ $i }} Hour{{ $i > 1 ? 's' : '' }}</option>
                                     @endfor
@@ -120,14 +114,11 @@
                     </div>
 
                     <div class="space-y-6">
-                        <h3 class="text-sm font-black text-ewc-black uppercase border-b border-gray-100 pb-2">2. Payment
-                        </h3>
+                        <h3 class="text-sm font-black text-ewc-black uppercase border-b border-gray-100 pb-2">2. Payment</h3>
 
-                        <div
-                            class="p-6 bg-black rounded-lg flex justify-between items-center text-white border-l-4 border-ewc-gold">
+                        <div class="p-6 bg-black rounded-lg flex justify-between items-center text-white border-l-4 border-ewc-gold">
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Total To
-                                    Pay</span>
+                                <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Total To Pay</span>
                                 <span class="text-xs text-gray-500">Includes Tax & Service</span>
                             </div>
                             <span class="text-3xl font-black text-ewc-gold" id="totalDisplay">Rp 0</span>
@@ -135,34 +126,31 @@
 
                         <div>
                             <label class="block text-xs font-bold text-gray-700 uppercase mb-3">Payment Method</label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="payment_method" value="transfer" class="peer sr-only"
-                                        onchange="togglePaymentInfo('transfer')" checked>
-                                    <div
-                                        class="p-4 border border-gray-300 rounded-lg hover:border-ewc-gold peer-checked:border-ewc-gold peer-checked:bg-yellow-50 flex items-center gap-3 transition-all">
-                                        <div
-                                            class="w-4 h-4 rounded-full border border-gray-400 peer-checked:bg-ewc-gold peer-checked:border-ewc-gold">
-                                        </div>
-                                        <span class="font-bold text-sm text-gray-700">Bank Transfer (BCA)</span>
+                                    <input type="radio" name="payment_method" value="transfer" class="peer sr-only" onchange="togglePaymentInfo('transfer')" checked>
+                                    <div class="p-4 border border-gray-300 rounded-lg hover:border-ewc-gold peer-checked:border-ewc-gold peer-checked:bg-yellow-50 flex flex-col items-center gap-2 transition-all text-center h-full justify-center">
+                                        <span class="font-bold text-xs text-gray-700">Bank Transfer</span>
                                     </div>
                                 </label>
+                                
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="payment_method" value="qris" class="peer sr-only"
-                                        onchange="togglePaymentInfo('qris')">
-                                    <div
-                                        class="p-4 border border-gray-300 rounded-lg hover:border-ewc-gold peer-checked:border-ewc-gold peer-checked:bg-yellow-50 flex items-center gap-3 transition-all">
-                                        <div
-                                            class="w-4 h-4 rounded-full border border-gray-400 peer-checked:bg-ewc-gold peer-checked:border-ewc-gold">
-                                        </div>
-                                        <span class="font-bold text-sm text-gray-700">QRIS (GoPay/OVO/Dana)</span>
+                                    <input type="radio" name="payment_method" value="qris" class="peer sr-only" onchange="togglePaymentInfo('qris')">
+                                    <div class="p-4 border border-gray-300 rounded-lg hover:border-ewc-gold peer-checked:border-ewc-gold peer-checked:bg-yellow-50 flex flex-col items-center gap-2 transition-all text-center h-full justify-center">
+                                        <span class="font-bold text-xs text-gray-700">QRIS</span>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="payment_method" value="cash" class="peer sr-only" onchange="togglePaymentInfo('cash')">
+                                    <div class="p-4 border border-gray-300 rounded-lg hover:border-ewc-gold peer-checked:border-ewc-gold peer-checked:bg-yellow-50 flex flex-col items-center gap-2 transition-all text-center h-full justify-center">
+                                        <span class="font-bold text-xs text-gray-700">Pay at Cashier</span>
                                     </div>
                                 </label>
                             </div>
                         </div>
 
-                        <div id="transferInfo"
-                            class="p-4 bg-gray-100 rounded-md border border-gray-200 text-sm text-gray-600">
+                        <div id="transferInfo" class="p-4 bg-gray-100 rounded-md border border-gray-200 text-sm text-gray-600">
                             <p class="font-bold text-gray-800 mb-1">Bank BCA</p>
                             <p class="font-mono text-lg tracking-wider text-black">123-456-7890</p>
                             <p class="text-xs mt-1">a.n Game Central Indonesia</p>
@@ -170,21 +158,27 @@
 
                         <div id="qrisInfo" class="hidden p-4 bg-gray-100 rounded-md border border-gray-200 text-center">
                             <p class="font-bold text-gray-800 mb-4 text-xs uppercase tracking-widest">Scan QR Code Below</p>
-                            <img src="{{ asset('images/qris.jpeg') }}"
-                                class="w-48 h-48 mx-auto border-4 border-white shadow-sm" alt="QRIS Code">
+                            <img src="{{ asset('images/qris.jpeg') }}" class="w-48 h-48 mx-auto border-4 border-white shadow-sm" alt="QRIS Code">
                             <p class="text-[10px] text-gray-500 mt-2">NMID: ID123456789</p>
                         </div>
 
-                        <div>
+                        <div id="cashInfo" class="hidden p-4 bg-green-50 rounded-md border border-green-200 text-sm text-green-800 flex items-start gap-3">
+                            <svg class="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            <div>
+                                <p class="font-bold uppercase">Pay at Venue</p>
+                                <p class="text-xs mt-1">Silakan lakukan pembayaran di kasir sebelum durasi main dimulai. Tunjukkan Booking ID Anda.</p>
+                            </div>
+                        </div>
+
+                        <div id="uploadSection">
                             <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Upload Payment Proof</label>
-                            <input type="file" name="payment_proof" accept="image/*" required
-                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-sm file:border-0 file:text-xs file:font-bold file:bg-ewc-black file:text-white hover:file:bg-gray-800 border border-gray-300 rounded-sm bg-gray-50">
+                            <input type="file" id="proofInput" name="payment_proof" accept="image/*" required
+                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-sm file:border-0 file:text-xs file:font-bold file:bg-ewc-black file:text-white hover:file:bg-gray-800 border border-gray-300 rounded-sm bg-gray-50">
                             <p class="text-[10px] text-gray-400 mt-1">Format: JPG, PNG. Max: 2MB.</p>
                         </div>
                     </div>
 
-                    <button type="submit"
-                        class="w-full py-4 bg-ewc-gold text-ewc-black font-black uppercase tracking-[0.2em] rounded-sm hover:bg-white hover:shadow-xl transition-all transform hover:-translate-y-1">
+                    <button type="submit" class="w-full py-4 bg-ewc-gold text-ewc-black font-black uppercase tracking-[0.2em] rounded-sm hover:bg-white hover:shadow-xl transition-all transform hover:-translate-y-1">
                         Complete Booking
                     </button>
                 </form>
@@ -203,12 +197,12 @@
                 pcSelect.style.display = 'block';
                 pcSelect.disabled = false;
                 pcSelect.setAttribute('name', 'bookable_id');
-
+                
                 arenaSelect.style.display = 'none';
                 arenaSelect.disabled = true;
                 arenaSelect.removeAttribute('name');
 
-                inputType.value = 'App\\Models\\Pc';
+                inputType.value = 'App\\Models\\Pc'; 
             } else {
                 pcSelect.style.display = 'none';
                 pcSelect.disabled = true;
@@ -218,7 +212,7 @@
                 arenaSelect.disabled = false;
                 arenaSelect.setAttribute('name', 'bookable_id');
 
-                inputType.value = 'App\\Models\\Arena';
+                inputType.value = 'App\\Models\\Arena'; 
             }
             calculateTotal();
         }
@@ -242,17 +236,35 @@
             document.getElementById('totalDisplay').innerText = formatter.format(total);
         }
 
-        // 3. Ganti Info Payment
+        // 3. Ganti Info Payment & Toggle Upload Logic
         function togglePaymentInfo(method) {
             const transferInfo = document.getElementById('transferInfo');
             const qrisInfo = document.getElementById('qrisInfo');
+            const cashInfo = document.getElementById('cashInfo');
+            
+            const uploadSection = document.getElementById('uploadSection');
+            const proofInput = document.getElementById('proofInput');
+
+            // Reset semua ke hidden dulu
+            transferInfo.classList.add('hidden');
+            qrisInfo.classList.add('hidden');
+            cashInfo.classList.add('hidden');
 
             if (method === 'transfer') {
                 transferInfo.classList.remove('hidden');
-                qrisInfo.classList.add('hidden');
-            } else {
-                transferInfo.classList.add('hidden');
+                // Wajib Upload
+                uploadSection.classList.remove('hidden');
+                proofInput.required = true; 
+            } else if (method === 'qris') {
                 qrisInfo.classList.remove('hidden');
+                // Wajib Upload
+                uploadSection.classList.remove('hidden');
+                proofInput.required = true;
+            } else if (method === 'cash') {
+                cashInfo.classList.remove('hidden');
+                // Sembunyikan Upload & Matikan Required
+                uploadSection.classList.add('hidden');
+                proofInput.required = false; 
             }
         }
 

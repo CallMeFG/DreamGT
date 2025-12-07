@@ -30,26 +30,34 @@ class MemberBookingController extends Controller
     // 2. Proses Simpan Booking (Store)
     public function store(Request $request)
     {
-        $request->validate([
+        // 1. VALIDASI INPUT
+        $validated = $request->validate([
+            'bookable_type' => 'required|string',
+            'bookable_id' => 'required|integer',
             'booking_date' => 'required|date|after_or_equal:today',
-            'start_time' => 'required',
+            'start_time' => 'required|date_format:H:i',
             'duration' => 'required|integer|min:1|max:12',
-            'bookable_type' => 'required',
-            'bookable_id' => 'required',
+            // Validasi Payment: Cash, Transfer, atau QRIS
+            'payment_method' => 'required|in:transfer,qris,cash',
+            // Bukti bayar wajib HANYA JIKA metode bukan cash
+            'payment_proof' => 'required_if:payment_method,transfer,qris|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Casting ke Integer agar Carbon tidak error
+        // Casting durasi ke Integer untuk perhitungan matematika
         $duration = (int) $request->duration;
 
-        // Hitung Waktu Selesai
+        // 2. HITUNG WAKTU SELESAI (Carbon)
+        // Menggabungkan tanggal dan jam mulai menjadi objek Carbon
         $startDateTime = Carbon::parse($request->booking_date . ' ' . $request->start_time);
 
-        // PERBAIKAN DI SINI: Gunakan variabel $duration yg sudah di-cast ke int
+        // Menghitung jam selesai berdasarkan durasi
         $endDateTime = $startDateTime->copy()->addHours($duration);
 
-        // CEK KONFLIK JADWAL
+        // 3. CEK KONFLIK JADWAL (Overlap Checking)
+        // Memastikan tidak ada booking lain di jam yang sama untuk unit tersebut
         $exists = Booking::where('bookable_type', $request->bookable_type)
             ->where('bookable_id', $request->bookable_id)
+            ->where('status', '!=', 'cancelled') // Abaikan yang sudah cancel
             ->where(function ($query) use ($startDateTime, $endDateTime) {
                 $query->whereBetween('start_time', [$startDateTime, $endDateTime])
                     ->orWhereBetween('end_time', [$startDateTime, $endDateTime])
@@ -58,26 +66,35 @@ class MemberBookingController extends Controller
                             ->where('end_time', '>', $endDateTime);
                     });
             })
-            ->where('status', '!=', 'cancelled')
             ->exists();
 
         if ($exists) {
-            return back()->withErrors(['conflict' => 'Jadwal tersebut sudah terisi. Pilih jam lain.'])->withInput();
+            return back()
+                ->withErrors(['conflict' => 'Jadwal tersebut sudah terisi. Silakan pilih jam atau unit lain.'])
+                ->withInput();
         }
 
-        // Hitung Harga Total
-        if ($request->bookable_type == Arena::class) {
+        // 4. HITUNG TOTAL HARGA
+        // Cek apakah yang dibooking adalah PC atau Arena untuk ambil harga per jam
+        if ($request->bookable_type == 'App\Models\Arena') {
             $item = Arena::find($request->bookable_id);
             $pricePerHour = $item->price_per_hour;
         } else {
-            $item = Pc::find($request->bookable_id);
+            // Asumsi PC, perlu load relasi type untuk harga
+            $item = Pc::with('type')->find($request->bookable_id);
             $pricePerHour = $item->type->price_per_hour;
         }
 
-        // PERBAIKAN DI SINI JUGA: Gunakan $duration (int) untuk perkalian harga
         $totalPrice = $pricePerHour * $duration;
 
-        // Simpan ke Database
+        // 5. HANDLE UPLOAD BUKTI BAYAR (Jika Ada)
+        $paymentPath = null;
+        if ($request->hasFile('payment_proof')) {
+            // Simpan ke folder 'public/payments'
+            $paymentPath = $request->file('payment_proof')->store('payments', 'public');
+        }
+
+        // 6. SIMPAN KE DATABASE
         Booking::create([
             'user_id' => Auth::id(),
             'bookable_type' => $request->bookable_type,
@@ -85,11 +102,13 @@ class MemberBookingController extends Controller
             'start_time' => $startDateTime,
             'end_time' => $endDateTime,
             'total_price' => $totalPrice,
-            'status' => 'pending',
-            'payment_method' => 'cash',
+            'payment_method' => $request->payment_method, // Simpan sesuai pilihan (cash/transfer/qris)
+            'payment_proof' => $paymentPath,             // Null jika cash
+            'status' => 'pending',                // Menunggu konfirmasi admin/staff
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'Booking berhasil dibuat! Silakan lakukan pembayaran.');
+        // 7. REDIRECT KE DASHBOARD
+        return redirect()->route('dashboard')->with('success', 'Booking berhasil dibuat! Mohon tunggu konfirmasi admin.');
     }
     public function show(Booking $booking)
     {

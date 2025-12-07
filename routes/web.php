@@ -11,8 +11,12 @@ use App\Http\Controllers\Admin\AdminPcController;
 use App\Http\Controllers\Admin\AdminArenaController;
 use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Auth\SocialAuthController;
 
 require __DIR__.'/auth.php';
+
+Route::get('auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
+Route::get('auth/{provider}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 
 Route::get('/', function () {
     return view('welcome');
