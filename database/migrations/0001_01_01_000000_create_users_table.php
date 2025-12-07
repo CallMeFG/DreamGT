@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,9 +13,15 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username')->unique()->nullable(); // Tambahan V2
             $table->string('email')->unique();
+            $table->string('phone')->nullable(); // Tambahan V2
+            $table->enum('role', ['admin', 'staff_pc', 'staff_arena', 'member'])->default('member');// Tambahan V2 RBAC
+            $table->string('avatar')->nullable(); // Tambahan V2
+            $table->string('google_id')->nullable(); // Persiapan Socialite
+            $table->string('github_id')->nullable(); // Persiapan Socialite
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable(); // Nullable agar bisa login sosmed tanpa password awal
             $table->rememberToken();
             $table->timestamps();
         });
