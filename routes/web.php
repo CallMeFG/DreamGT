@@ -44,6 +44,9 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/arenas', 'arenas')->name('public.arenas');
     Route::get('/competitions', 'competitions')->name('public.competitions');
     Route::get('/schedule', 'schedule')->name('public.schedule');
+    Route::get('/gallery', [PublicController::class, 'gallery'])->name('public.gallery');
+    Route::get('/about', [PublicController::class, 'about'])->name('public.about');
+    Route::get('/contact', [PublicController::class, 'contact'])->name('public.contact');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

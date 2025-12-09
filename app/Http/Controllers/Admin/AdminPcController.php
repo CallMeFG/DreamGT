@@ -18,7 +18,7 @@ class AdminPcController extends Controller
             $query->where('pc_number', 'like', '%' . $request->search . '%');
         }
         // Filter Status
-        if ($request->status && $request->status != 'all') {
+        if ($request->status && $request->status != 'all') {    
             $query->where('status', $request->status);
         }
 

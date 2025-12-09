@@ -20,8 +20,8 @@
 
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">
                     <p class="text-gray-500 font-medium text-sm md:text-base max-w-lg leading-relaxed">
-                        Jadwal turnamen & komunitas minggu ini. <br>
-                        <span class="text-black font-bold">Arena buka Selasa - Minggu.</span>
+                        This week's tournament & community schedule. <br>
+                        <span class="text-black font-bold">Arena open Tue–Sun.</span>
                     </p>
 
                     <div class="flex flex-wrap gap-2 w-full lg:w-auto">
@@ -134,8 +134,8 @@
                         <span class="text-ewc-gold">///</span> Basecamp
                     </h3>
                     <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        Jl. Jendral Sudirman No. 88, Jakarta Pusat.<br>
-                        Gedung Game Central, Lantai 2 (Samping MRT).
+                        Jl. Umban Sari no 2.<br>
+                        Dream GT Tower, Pekanbaru.
                     </p>
                     <div class="flex gap-4">
                         <a href="#"

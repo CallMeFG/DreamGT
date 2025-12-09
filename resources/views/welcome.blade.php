@@ -11,32 +11,33 @@
             font-family: 'Barlow', sans-serif;
         }
     </style>
-    <div  class="bg-[#050505] w-full max-w-[100vw] overflow-x-hidden font-sans antialiased selection:bg-ewc-gold selection:text-black text-white">
+    <div class="bg-[#050505] w-full max-w-[100vw] overflow-x-hidden font-sans antialiased selection:bg-ewc-gold selection:text-black text-white">
 
-        <div
-            class="relative h-[90vh] w-full bg-[#050505] overflow-hidden flex items-center justify-center border-b border-white/10">
-            <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale">
+        <div class="relative h-[90vh] w-full bg-[#050505] overflow-hidden flex items-center justify-center border-b border-white/10">
+            <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-80 grayscale">
                 <source src="{{ asset('videos/hero-intro.mp4') }}" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-black/50 to-black/80"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#05050586] via-black/50 to-black/80"></div>
 
             <div class="relative z-10 text-center px-6 max-w-7xl mx-auto mt-12">
-
                 <div
                     class="inline-flex items-center gap-3 py-2 px-6 border border-ewc-gold/30 bg-black/80 backdrop-blur-md mb-8 rounded-sm">
                     <span class="w-1.5 h-1.5 bg-red-600 animate-pulse rounded-full"></span>
-                    <span class="text-ewc-gold text-xs font-bold tracking-[0.2em] uppercase font-esports">Season 5 / Live</span>
+                    <span class="text-ewc-gold text-xs font-bold tracking-[0.2em] uppercase font-esports">Tournament / Play
+                        Games</span>
                 </div>
 
                 <h1
                     class="text-7xl md:text-9xl font-extrabold text-white uppercase font-esports tracking-tight leading-none mb-8 drop-shadow-2xl">
                     Level <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-b from-ewc-gold to-yellow-600">Unlimited</span>
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-b from-ewc-gold to-yellow-600">Unlimited</span>
                 </h1>
 
                 <p class="text-gray-300 text-lg md:text-xl font-medium tracking-wide max-w-2xl mx-auto mb-10 font-esports">
-                    The ultimate esports ecosystem. <span class="text-white border-b border-ewc-gold/50">RTX 4090</span>
-                    Workstations & Dedicated Fiber.
+                    Level up your journey.
+                    <span class="text-white border-b border-ewc-gold/50">Unlimited opportunities,</span>
+                    unmatched competitions.
                 </p>
 
                 <div class="flex flex-col sm:flex-row justify-center gap-5">
@@ -57,26 +58,26 @@
                 class="absolute top-1/2 left-0 transform -translate-y-1/2 whitespace-nowrap animate-marquee flex gap-16 items-center">
                 @for($i = 0; $i < 20; $i++)
                     <div class="flex items-center gap-6 opacity-90">
-                        <span class="text-black font-extrabold uppercase text-3xl tracking-tight font-esports">GAME CENTRAL</span>
+                        <span class="text-black font-extrabold uppercase text-3xl tracking-tight font-esports">DreamGT</span>
                         <span
-                            class="text-black font-bold uppercase text-lg border border-black px-3 py-0.5 font-esports rounded-sm">RTX
-                            4090</span>
+                            class="text-black font-bold uppercase text-lg border border-black px-3 py-0.5 font-esports rounded-sm">Well
+                            Played</span>
                         <span class="text-black text-3xl">•</span>
                     </div>
                 @endfor
             </div>
         </div>
 
-        <div class="bg-[#050505] py-24 px-6 md:px-12 relative">
+        <div class="bg-white py-24 px-6 md:px-12 relative border-t border-gray-200">
             <div class="max-w-7xl mx-auto w-full">
 
-                <div class="flex flex-col md:flex-row justify-between items-end mb-12 pb-6 border-b border-white/10">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 pb-6 border-b border-gray-200">
                     <div>
                         <h4 class="text-ewc-gold font-bold uppercase tracking-[0.2em] text-sm mb-2">Our Arsenal</h4>
-                        <h2 class="text-5xl font-black text-white uppercase tracking-tighter">Elite Specs</h2>
+                        <h2 class="text-5xl font-black text-ewc-black uppercase tracking-tighter">Elite Specs</h2>
                     </div>
                     <a href="{{ route('public.arenas') }}"
-                        class="group text-gray-400 text-sm hover:text-ewc-gold flex items-center gap-2 transition-colors mt-4 md:mt-0">
+                        class="group text-gray-500 text-sm hover:text-ewc-black flex items-center gap-2 transition-colors mt-4 md:mt-0 font-bold uppercase tracking-widest">
                         Full Inventory <span class="group-hover:translate-x-1 transition-transform">→</span>
                     </a>
                 </div>
@@ -84,22 +85,23 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto">
 
                     <div
-                        class="md:col-span-2 relative h-[450px] group rounded-2xl overflow-hidden border border-white/10 bg-gray-900 cursor-pointer">
+                        class="md:col-span-2 relative h-[450px] group rounded-2xl overflow-hidden bg-ewc-black border border-gray-200 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300">
                         <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=1000"
-                            class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                            class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+
                         <div
                             class="absolute inset-0 border-2 border-transparent group-hover:border-ewc-gold/50 rounded-2xl transition-colors duration-500">
                         </div>
 
                         <div class="absolute bottom-0 left-0 p-10 w-full">
                             <span
-                                class="bg-ewc-gold text-black text-xs font-bold px-3 py-1 rounded uppercase mb-3 inline-block shadow-[0_0_15px_rgba(251,191,36,0.5)]">Flagship
+                                class="bg-ewc-gold text-black text-xs font-bold px-3 py-1 rounded uppercase mb-3 inline-block shadow-lg">Flagship
                                 Rig</span>
                             <h3 class="text-4xl font-black text-white uppercase italic mb-2">ROG Strix Station</h3>
                             <p
                                 class="text-gray-300 text-sm mb-4 max-w-md transform translate-y-2 group-hover:translate-y-0 opacity-80 group-hover:opacity-100 transition-all duration-500">
-                                Dominasi server dengan Intel Core i9-13900K dan RTX 4090. Frame rate maksimal tanpa drop.
+                                Powered by Intel Core i9-13900K and RTX 4090 for flawless gameplay and uncompromised frame rates.
                             </p>
                             <div class="flex gap-3">
                                 <span
@@ -113,11 +115,11 @@
                     </div>
 
                     <div
-                        class="md:col-span-1 relative h-[450px] group rounded-2xl overflow-hidden border border-white/10 bg-white cursor-pointer hover:border-ewc-gold transition-colors duration-500">
-                        <div class="absolute inset-0 bg-gray-50 group-hover:bg-white transition-colors duration-500"></div>
+                        class="md:col-span-1 relative h-[450px] group rounded-2xl overflow-hidden bg-gray-50 border border-gray-200 shadow-lg cursor-pointer hover:border-ewc-gold transition-all duration-500 hover:-translate-y-1">
+                        <div class="absolute inset-0 bg-white group-hover:bg-gray-50 transition-colors duration-500"></div>
                         <div class="absolute inset-0 flex flex-col justify-center items-center text-center p-8 z-10">
                             <div
-                                class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mb-8 group-hover:bg-ewc-gold group-hover:scale-110 transition-all duration-500 shadow-inner">
+                                class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-8 group-hover:bg-ewc-gold group-hover:scale-110 transition-all duration-500 shadow-sm">
                                 <svg class="w-12 h-12 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -125,14 +127,14 @@
                             </div>
                             <h3 class="text-7xl font-black text-ewc-black mb-2 tracking-tighter">360<span
                                     class="text-3xl text-ewc-gold">Hz</span></h3>
-                            <p class="text-gray-600 font-bold uppercase tracking-widest text-sm">ZOWIE XL2566K</p>
+                            <p class="text-gray-500 font-bold uppercase tracking-widest text-sm">ZOWIE XL2566K</p>
                             <p class="text-xs text-gray-400 mt-6 px-4 border-t border-gray-200 pt-4">"The smoothest visual
                                 experience for FPS"</p>
                         </div>
                     </div>
 
                     <div
-                        class="md:col-span-1 relative h-[300px] group rounded-2xl overflow-hidden border border-white/10 bg-gray-900 cursor-pointer">
+                        class="md:col-span-1 relative h-[300px] group rounded-2xl overflow-hidden bg-ewc-black border border-gray-200 shadow-lg cursor-pointer hover:shadow-xl transition-all">
                         <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80"
                             class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 transition-all duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors"></div>
@@ -144,7 +146,7 @@
                     </div>
 
                     <div
-                        class="md:col-span-2 relative h-[300px] group rounded-2xl overflow-hidden border border-white/10 bg-ewc-black p-10 flex items-center justify-between cursor-pointer hover:border-ewc-gold/50 transition-colors">
+                        class="md:col-span-2 relative h-[300px] group rounded-2xl overflow-hidden bg-[#0a0a0a] border border-gray-200 p-10 flex items-center justify-between cursor-pointer hover:border-ewc-gold/50 transition-colors shadow-lg">
                         <div>
                             <h4 class="text-6xl font-black text-white mb-2 group-hover:text-ewc-gold transition-colors">1ms
                             </h4>
@@ -286,11 +288,13 @@
         </div>
 
         <div class="py-32 bg-[#050505] text-center px-6 relative overflow-hidden w-full border-t border-white/10">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
+            <div
+                class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10">
             </div>
 
             <div class="relative z-10 max-w-4xl mx-auto">
-                <h4 class="text-gray-500 font-bold uppercase tracking-[0.3em] text-xs mb-6 font-esports">Join The League</h4>
+                <h4 class="text-gray-500 font-bold uppercase tracking-[0.3em] text-xs mb-6 font-esports">Join The League
+                </h4>
 
                 <h2
                     class="text-6xl md:text-8xl font-extrabold text-white uppercase font-esports tracking-tight mb-10 leading-none">
@@ -311,5 +315,45 @@
             </div>
         </div>
 
+        <div class="bg-[#0a0a0a] text-white py-16 px-6 border-t-4 border-ewc-gold">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-2">
+                        <span class="text-ewc-gold">///</span> Operational Hours
+                    </h3>
+                    <div class="space-y-4 text-sm font-mono text-gray-400">
+                        <div class="flex justify-between border-b border-white/10 pb-2">
+                            <span>Mon - Fri</span> <span class="text-white font-bold">24 Hours</span>
+                        </div>
+                        <div class="flex justify-between border-b border-white/10 pb-2">
+                            <span>Sat - Sun</span> <span class="text-white font-bold">24 Hours (Tournament)</span>
+                        </div>
+                        <div class="flex justify-between text-red-500 pt-1">
+                            <span>Server Maintenance</span> <span>Tue 03:00 - 05:00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-black uppercase mb-6 flex items-center gap-2">
+                        <span class="text-ewc-gold">///</span> Basecamp
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Jl. Umban Sari no 2.<br>
+                        Dream GT Tower, Pekanbaru.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="px-6 py-3 bg-white text-black font-bold uppercase text-[10px] tracking-widest hover:bg-ewc-gold transition-colors">
+                            Google Maps
+                        </a>
+                        <a href="#"
+                            class="px-6 py-3 border border-white text-white font-bold uppercase text-[10px] tracking-widest hover:bg-white/10 transition-colors">
+                            Contact Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

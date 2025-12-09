@@ -1,16 +1,13 @@
 <aside
     class="fixed inset-y-0 left-0 z-40 w-52 bg-white border-r border-gray-200 transform transition-transform duration-300 md:translate-x-0 flex flex-col justify-between shadow-[4px_0_24px_rgba(0,0,0,0.02)]"
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
-    <div class="h-16 flex items-center px-5 border-b border-gray-100 bg-white">
-        <a href="{{ url('/') }}" class="flex items-center gap-2 group">
-            <svg class="h-7 w-7 text-ewc-black group-hover:text-ewc-gold transition-colors" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-            </svg>
-            <span
-                class="font-black text-lg tracking-tighter text-ewc-black group-hover:tracking-normal transition-all duration-300">
-                GAME<span class="text-ewc-gold">CENTRAL</span>
+
+    <div class="h-16 flex items-center justify-center border-b border-gray-100 bg-white">
+        <a href="{{ url('/') }}" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <img src="{{ asset('images/logo.png') }}" alt="Dream GT" class="h-8 w-8 object-contain">
+
+            <span class="text-xl font-black tracking-tighter text-ewc-black">
+                DREAM<span class="text-ewc-gold">GT</span>
             </span>
         </a>
     </div>
@@ -53,76 +50,101 @@
             </svg>
             Schedule
         </a>
-
-    @php
-$role = Auth::user()->role ?? '';
-    @endphp
-    
-    @if(in_array($role, ['admin', 'staff_pc', 'staff_arena']))
-                <div class="mt-8 mb-2 border-t border-gray-100 pt-4">
-                    <p class="px-3 text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">
-                        {{ $role === 'admin' ? 'Admin Control' : 'Staff Workspace' }}
-                    </p>
-                </div>
-
-                <a href="{{ route('admin.dashboard') }}"
-                    class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.dashboard') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    Dashboard
-                </a>
-
-                @if(in_array($role, ['admin', 'staff_pc']))
-                    <a href="{{ route('admin.pcs.index') }}"
-                        class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.pcs.*') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        Manage PCs
-                    </a>
-                @endif
-
-                @if(in_array($role, ['admin', 'staff_arena']))
-                    <a href="{{ route('admin.arenas.index') }}"
-                        class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.arenas.*') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                        Manage Arenas
-                    </a>
-                @endif
-
-                <a href="{{ route('admin.bookings.index') }}"
-                    class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.bookings.*') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                    </svg>
-                    Transactions
-                </a>
-        <a href="{{ route('admin.calendar.index') }}"
-            class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.calendar.index') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
+        <a href="{{ route('public.gallery') }}"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-r-md transition-all {{ Request::routeIs('public.gallery') ? 'bg-white text-ewc-black shadow-md border-l-4 border-ewc-gold' : 'text-gray-500 hover:bg-gray-50 hover:text-ewc-black' }}">
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            Calendar
+            Gallery
         </a>
-                @if($role === 'admin')
-                    <a href="{{ route('admin.users.index') }}"
-                        class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.users.*') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
-                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                        Users
-                    </a>
-                @endif
-    @endif
+
+        <a href="{{ route('public.about') }}"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-r-md transition-all {{ Request::routeIs('public.about') ? 'bg-white text-ewc-black shadow-md border-l-4 border-ewc-gold' : 'text-gray-500 hover:bg-gray-50 hover:text-ewc-black' }}">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            About Us
+        </a>
+
+        <a href="{{ route('public.contact') }}"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-r-md transition-all {{ Request::routeIs('public.contact') ? 'bg-white text-ewc-black shadow-md border-l-4 border-ewc-gold' : 'text-gray-500 hover:bg-gray-50 hover:text-ewc-black' }}">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Contact
+        </a>
+        @php
+            $role = Auth::user()->role ?? '';
+        @endphp
+
+        @if(in_array($role, ['admin', 'staff_pc', 'staff_arena']))
+            <div class="mt-8 mb-2 border-t border-gray-100 pt-4">
+                <p class="px-3 text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">
+                    {{ $role === 'admin' ? 'Admin Control' : 'Staff Workspace' }}
+                </p>
+            </div>
+
+            <a href="{{ route('admin.dashboard') }}"
+                class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.dashboard') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Dashboard
+            </a>
+
+            @if(in_array($role, ['admin', 'staff_pc']))
+                <a href="{{ route('admin.pcs.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.pcs.*') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Manage PCs
+                </a>
+            @endif
+
+            @if(in_array($role, ['admin', 'staff_arena']))
+                <a href="{{ route('admin.arenas.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.arenas.*') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    Manage Arenas
+                </a>
+            @endif
+
+            <a href="{{ route('admin.bookings.index') }}"
+                class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.bookings.*') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+                Transactions
+            </a>
+            <a href="{{ route('admin.calendar.index') }}"
+                class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.calendar.index') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Calendar
+            </a>
+            @if($role === 'admin')
+                <a href="{{ route('admin.users.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-r-md transition-all {{ Request::routeIs('admin.users.*') ? 'bg-red-50 text-red-700 border-l-4 border-red-600' : 'text-gray-600 hover:bg-red-50 hover:text-red-600' }}">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    Users
+                </a>
+            @endif
+        @endif
     </nav>
 
     <div class="p-4 border-t border-gray-100 bg-white">

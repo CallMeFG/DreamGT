@@ -15,11 +15,13 @@ class PublicController extends Controller
 
     public function arenas()
     {
-        // Ambil semua PC (dikelompokkan per tipe biar rapi jika mau, tapi list semua ok)
-        // Eager load 'type' agar bisa ambil harga/nama tipe
-        $pcs = Pc::with('type')->orderBy('pc_number')->get();
+        // Ganti get() menjadi paginate(12)
+        // Angka 12 dipilih karena bisa dibagi 2, 3, dan 4 kolom dengan rapi
+        $pcs = Pc::with('type')
+            ->orderBy('pc_number')
+            ->paginate(12);
 
-        // Ambil semua Arena
+        // Arena biasanya sedikit, jadi tetap get() atau all() tidak masalah
         $arenas = Arena::all();
 
         return view('public.arenas', compact('pcs', 'arenas'));
@@ -62,5 +64,18 @@ class PublicController extends Controller
 
         return view('public.schedule', compact('weekSchedule'));
     }
-    
+    public function gallery()
+    {
+        return view('public.gallery');
+    }
+
+    public function about()
+    {
+        return view('public.about');
+    }
+
+    public function contact()
+    {
+        return view('public.contact');
+    }
 }
