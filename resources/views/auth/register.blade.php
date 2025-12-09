@@ -10,7 +10,7 @@
                     <h2 class="text-3xl font-black text-ewc-black uppercase tracking-tighter">
                         Join The <span class="text-ewc-gold">Arena</span>
                     </h2>
-                    <p class="text-gray-500 text-sm mt-2">Buat akun member untuk mulai bermain.</p>
+                    <p class="text-gray-500 text-sm mt-2">Register your member account to access gameplay.</p>
                 </div>
 
                 <form method="POST" action="{{ route('register') }}" class="space-y-4">

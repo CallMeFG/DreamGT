@@ -10,7 +10,7 @@
                     <h2 class="text-3xl font-black text-ewc-black uppercase tracking-tighter">
                         Welcome <span class="text-ewc-gold">Back</span>
                     </h2>
-                    <p class="text-gray-500 text-sm mt-2">Masuk untuk melanjutkan progress Anda.</p>
+                    <p class="text-gray-500 text-sm mt-2">Sign in to continue your progress.</p>
                 </div>
 
                 <x-auth-session-status class="mb-4" :status="session('status')" />
